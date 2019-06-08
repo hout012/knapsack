@@ -1,7 +1,6 @@
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-//HELLO WORLD
 public class BinaryKnapSack {
 	private int maxWeight = 0;
 	ArrayList<Integer> result = new ArrayList<Integer>();
