@@ -14,7 +14,6 @@ public class GraphicUI {
 		
 		BinaryKnapSack test = new BinaryKnapSack();
 		JFrame win = new JFrame();
-		//JList list = new JList(test.getItems().toArray());
 		JTabbedPane t1 = new JTabbedPane();
 		JPanel p1 = new JPanel();
 		JPanel p2 = new JPanel();
@@ -28,11 +27,6 @@ public class GraphicUI {
 		JButton add = new JButton("Add Item");
 		JLabel maxWeight = new JLabel("Maximum Weight");
 		JLabel knap = new JLabel("Knapsack solution");
-		//test
-		JLabel n1 = new JLabel("Solutions: MaxProfit = 235");
-
-		//test
-		p2.add(n1);
 		JTextField w = new JTextField(5); 
 		w.setText("0");
 		JButton dks = new JButton("Start");
@@ -52,28 +46,28 @@ public class GraphicUI {
 		
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				  JTextField name = new JTextField(10);
-//				  JTextField weight = new JTextField(5);
-//			      JTextField price =  new JTextField(5);
-//			      JPanel myPanel = new JPanel();
-//			      myPanel.setLayout(new BoxLayout(myPanel,BoxLayout.PAGE_AXIS));
-//			      myPanel.add(new JLabel("Name"));
-//			      myPanel.add(name);
-//			      myPanel.add(new JLabel("Weight"));
-//			      myPanel.add(weight);
-//			      myPanel.add(new JLabel("Price"));
-//			      myPanel.add(price);
-//			      
-//			      int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Item infos", JOptionPane.OK_CANCEL_OPTION);
-//			      if(result == 0 ) {
-//			    	  n++;
-//			    	  test.createItem(name.getText(), Integer.parseInt(weight.getText()),  Integer.parseInt(price.getText()));
-//			    	  String str = "Name: "+name.getText()+", Price ($): "+price.getText()+", Weight (kg): "+weight.getText();
-//			    	  JLabel n = new JLabel(str);
-//			    	  p2.add(n);
-//			    	  win.revalidate();
-//			    	
-//			      }
+				  JTextField name = new JTextField(10);
+				  JTextField weight = new JTextField(5);
+			      JTextField price =  new JTextField(5);
+			      JPanel myPanel = new JPanel();
+			      myPanel.setLayout(new BoxLayout(myPanel,BoxLayout.PAGE_AXIS));
+			      myPanel.add(new JLabel("Name"));
+			      myPanel.add(name);
+			      myPanel.add(new JLabel("Weight"));
+			      myPanel.add(weight);
+			      myPanel.add(new JLabel("Price"));
+			      myPanel.add(price);
+			      
+			      int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Item infos", JOptionPane.OK_CANCEL_OPTION);
+			      if(result == 0 ) {
+			    	  n++;
+			    	  test.createItem(name.getText(), Integer.parseInt(weight.getText()),  Integer.parseInt(price.getText()));
+			    	  String str = "Name: "+name.getText()+", Price ($): "+price.getText()+", Weight (kg): "+weight.getText();
+			    	  JLabel n = new JLabel(str);
+			    	  p2.add(n);
+			    	  win.revalidate();
+			    	
+			      }
 				
 				
 				
