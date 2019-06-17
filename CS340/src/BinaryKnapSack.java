@@ -144,4 +144,21 @@ public class BinaryKnapSack {
 		curstore[lvl]--;        // backtrack by decrementing count of cur. item
 	}
 	*/	
+	
+	
+	
+	
+	
+	/* Gentics Algorithms 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 }

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 public class GraphicUI {
 	int W = 0;
 	int n =0;
@@ -90,6 +91,15 @@ public class GraphicUI {
 				p2.revalidate();
 				
 				
+			}
+		});
+		
+		imp.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser jc = new JFileChooser();
+				FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files (*csv)", "csv");
+				jc.setFileFilter(filter);
+				int i = jc.showOpenDialog(jc);
 			}
 		});
 	}
