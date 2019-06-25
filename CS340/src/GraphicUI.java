@@ -13,7 +13,7 @@ public class GraphicUI {
 	int n =0;
 	public GraphicUI() {
 		
-		BinaryKnapSack test = new BinaryKnapSack();
+		DPSolver test = new DPSolver();
 		JFrame win = new JFrame();
 		JTabbedPane t1 = new JTabbedPane();
 		JPanel p1 = new JPanel();
@@ -59,6 +59,7 @@ public class GraphicUI {
 			      myPanel.add(new JLabel("Price"));
 			      myPanel.add(price);
 			      
+			      
 			      int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Item infos", JOptionPane.OK_CANCEL_OPTION);
 			      if(result == 0 ) {
 			    	  n++;
@@ -67,6 +68,7 @@ public class GraphicUI {
 			    	  JLabel n = new JLabel(str);
 			    	  p2.add(n);
 			    	  win.revalidate();
+			    	
 			    	
 			      }
 				
@@ -78,17 +80,16 @@ public class GraphicUI {
 		dks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				W = Integer.parseInt(w.getText());
-				test.knapSackDp(W,n);
-				
-				p2.removeAll();
-				for (Integer num : test.getResult()) { 		      
-					String str = "Name: "+test.getNameList().get(num)+", Price ($): "+
-							test.getPriceList().get(num)+", Weight (kg): "+test.getWeightList().get(num);
-					JLabel n = new JLabel(str);
-					n.setForeground(Color.green);
-					p2.add(n);		
-			      }
-				p2.revalidate();
+				test.setmaxWeight(W);
+//				p2.removeAll();
+//				for (Integer num : test.getResult()) { 		      
+//					String str = "Name: "+test.getNameList().get(num)+", Price ($): "+
+//							test.getPriceList().get(num)+", Weight (kg): "+test.getWeightList().get(num);
+//					JLabel n = new JLabel(str);
+//					n.setForeground(Color.green);
+//					p2.add(n);		
+//			      }
+//				p2.revalidate();
 				
 				
 			}
@@ -110,3 +111,4 @@ public class GraphicUI {
 	
 
 }
+
