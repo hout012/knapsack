@@ -1,16 +1,7 @@
-import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.List;
 public class DPSolver {
 	private int maxWeight = 0;
-	private int maxProfit = 0;
-	ArrayList<Integer> result = new ArrayList<Integer>();
-	int[] store;
-	int n = 0;
-	
-//	ArrayList<Integer> wt = new ArrayList<Integer>();
-//	ArrayList<Integer> val = new ArrayList<Integer>();
-//	ArrayList<String> name = new ArrayList<String>();
+	ArrayList<Item> result = new ArrayList<Item>();
 	ArrayList<Item> items = new ArrayList<Item>();
 	
 	public DPSolver() {
@@ -18,9 +9,8 @@ public class DPSolver {
 	}
 	
 	public void createItem(String name,float weight,int price) {
-		Item itema = new Item(name,price,weight);
-		items.add(itema);
-		
+		Item i = new Item(name,price,weight);
+		items.add(i);
 	}
 	
 	void knapSackDp(int W, int n) {
@@ -31,9 +21,9 @@ public class DPSolver {
             for (w = 0; w <= W; w++) { 
                 if (i == 0 || w == 0) 
                     K[i][w] = 0; 
-                else if (wt.get(i - 1) <= w) 
-                    K[i][w] = Math.max(val.get(i - 1) +  
-                              K[i - 1][w - wt.get(i - 1)], K[i - 1][w]); 
+                else if (items.get(i - 1).getWeight() <= w) 
+                    K[i][w] = Math.max(items.get(i - 1).getValue() +  
+                              K[i - 1][(int) (w - items.get(i - 1).getWeight())], K[i - 1][w]); 
                 else
                     K[i][w] = K[i - 1][w]; 
             } 
@@ -48,10 +38,10 @@ public class DPSolver {
             }
             else {
             	//Items get picked
-                System.out.println("Item name: "+name.get(i-1)+" Price: "+wt.get(i-1) + " "); 
-                result.add(i-1);
-                res = res - val.get(i - 1); 
-                w = w - wt.get(i - 1); 
+                System.out.println("Item name: "+items.get(i-1).getName()+" Price: "+items.get(i-1).getValue() + " Weight:"+items.get(i-1).getWeight()); 
+                result.add(items.get(i-1));
+                res = res - items.get(i - 1).getValue(); 
+                w = w - (int)items.get(i - 1).getWeight(); 
             }
         }  
 	}
@@ -65,18 +55,12 @@ public class DPSolver {
 		return this.maxWeight;
 	}
 	
-	ArrayList<Integer> getWeightList(){
-		return this.wt;
+
+	ArrayList<Item> getItemList(){
+		return this.items;
 	}
 	
-	ArrayList<Integer> getPriceList(){
-		return this.val;
-	}
-	ArrayList<String> getNameList(){
-		return this.name;
-	}
-	
-	ArrayList<Integer> getResult(){
+	ArrayList<Item> getResult(){
 		return this.result;
 	}
 	
