@@ -1,9 +1,11 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class BNBSolver {
 	   private List<Item> items;
-	   private int capacity;
+	   private int capacity = 10;
 
 	private class Node implements Comparable<Node> {
 	      
@@ -46,19 +48,12 @@ public class BNBSolver {
 	      }
 	   }
 	   
-//	   public BranchAndBoundSolver(List<Item> items, int capacity) {
-//	      super(items, capacity);
-//	   }
-	   
-	   @Override
-	   public KnapsackSolution solve() {
+	   public void solve() {
 	      
 	      Collections.sort(items, Item.byRatio());
-	      
 	      Node best = new Node();
 	      Node root = new Node();
 	      root.computeBound();
-	      
 	      PriorityQueue<Node> q = new PriorityQueue<Node>();
 	      q.offer(root);
 	      
@@ -69,12 +64,12 @@ public class BNBSolver {
 	            
 	            Node with = new Node(node);
 	            Item item = items.get(node.h);
-	            with.weight += item.weight;
+	            with.weight += item.getWeight();
 	            
 	            if (with.weight <= capacity) {
 	            
 	               with.taken.add(items.get(node.h));
-	               with.value += item.value;
+	               with.value += item.getValue();
 	               with.computeBound();
 	               
 	               if (with.value > best.value) {
@@ -93,13 +88,13 @@ public class BNBSolver {
 	            }
 	         }
 	      }
-	      
-	      KnapsackSolution solution = new KnapsackSolution();
-	      solution.value = best.value;
-	      solution.weight = best.weight;
-	      solution.items = best.taken;
-	      solution.approach = "Using Branch and Bound the best feasible solution found";
-	      
-	      return solution;
+	      for (int i = 0;i<best.taken.size();i++) {
+	    	  System.out.println(best.taken.get(i).getName());
+	      }
+
+	   }
+	   
+	   public void setItems(List<Item> items) {
+		   this.items = items;
 	   }
 }

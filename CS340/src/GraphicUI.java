@@ -1,95 +1,143 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
 public class GraphicUI {
 	int W = 0;
 	int n =0;
+	boolean onlyint = true;
 	public GraphicUI() {
-		
 		DPSolver test = new DPSolver();
+		
 		JFrame win = new JFrame();
+		
 		JTabbedPane t1 = new JTabbedPane();
+		
 		JPanel p1 = new JPanel();
-		JPanel p2 = new JPanel();
-		p2.setBackground(Color.black);
+		JPanel p2 =new JPanel(new BorderLayout());
+		p2.setBackground(Color.white);
+		
+		String col[] = {"Item Name","Weight","Value"};
+
+		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+
+		JTable table = new JTable(tableModel);
+		//////Test (remove)
+		List <Item> items = new ArrayList<Item>();
+		items.add(new Item("Item1",40,2));
+		items.add(new Item("Item2",50,3.14));
+		items.add(new Item("Item3",100,1.98));
+		items.add(new Item("Item4",95,5));
+		items.add(new Item("Item5",30,3));
+		
+		for (int i = 0;i<items.size();i++) {
+			String name = items.get(i).getName();
+			int value = items.get(i).getValue();
+			double weight = items.get(i).getWeight();
+			
+			Object[] data = {name,weight,value};
+			tableModel.addRow(data);
+		}
+		p2.add(new JScrollPane(table));
+		//////
+		
 		JMenuBar bar = new JMenuBar();
 		JMenu menu = new JMenu("File");
 		JMenuItem imp = new JMenuItem("Import");
 		JMenuItem exp = new JMenuItem("Export");
+		
 		menu.add(imp);menu.add(exp);bar.add(menu);
 		win.setJMenuBar(bar);
+		win.setLayout(new BoxLayout(win.getContentPane(),BoxLayout.X_AXIS));
+		
 		JButton add = new JButton("Add Item");
+		JButton dks = new JButton("Start");
+		
 		JLabel maxWeight = new JLabel("Maximum Weight");
 		JLabel knap = new JLabel("Knapsack solution");
 		JTextField w = new JTextField(5); 
 		w.setText("0");
-		JButton dks = new JButton("Start");
-		win.setLayout(new BoxLayout(win.getContentPane(),BoxLayout.X_AXIS));
-		p2.setLayout(new BoxLayout(p2,BoxLayout.Y_AXIS));
-		p2.setPreferredSize(new Dimension(400,100));
-		p2.setBackground(Color.white);
+		
+		
 		t1.setPreferredSize(new Dimension(200,100));
 		p1.add(add);p1.add(maxWeight);p1.add(w);p1.add(knap);p1.add(dks);
 		t1.add(p1,"Items");
+		
 		win.add(p2);win.add(t1);
+		win.pack();
 		win.setBounds(50, 50, 600, 450);
 		win.setVisible(true);
 		win.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 
 		
 		
 		add.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				  JTextField name = new JTextField(10);
 				  JTextField weight = new JTextField(5);
 			      JTextField price =  new JTextField(5);
 			      JPanel myPanel = new JPanel();
 			      myPanel.setLayout(new BoxLayout(myPanel,BoxLayout.PAGE_AXIS));
-			      myPanel.add(new JLabel("Name"));
+			      myPanel.add(new JLabel("Item Name"));
 			      myPanel.add(name);
-			      myPanel.add(new JLabel("Weight"));
+			      myPanel.add(new JLabel("Weight (kg)"));
 			      myPanel.add(weight);
-			      myPanel.add(new JLabel("Price"));
+			      myPanel.add(new JLabel("Value)"));
 			      myPanel.add(price);
 			      
-			      
-			      int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Item infos", JOptionPane.OK_CANCEL_OPTION);
+			      int result = JOptionPane.showConfirmDialog(null, myPanel, "Please Enter Item information", JOptionPane.OK_CANCEL_OPTION);
 			      if(result == 0 ) {
-			    	  n++;
-			    	  test.createItem(name.getText(), Integer.parseInt(weight.getText()),  Integer.parseInt(price.getText()));
-			    	  String str = "Name: "+name.getText()+", Price ($): "+price.getText()+", Weight (kg): "+weight.getText();
-			    	  JLabel n = new JLabel(str);
-			    	  p2.add(n);
-			    	  win.revalidate();
-			    	
-			    	
+			    	  
+			    	  String na = name.getText(); 
+			    	  int v = Integer.parseInt(price.getText());
+			    	  
+			    	  //check if int
+			    	  if(weight.getText().contains(".")){
+			    		  onlyint = false;
+			    	  }
+			    	  double w =  Double.parseDouble(weight.getText());
+			    	  System.out.println(onlyint);
+			    
+			    	  items.add(new Item(na,v,w));
+			    	  Object[] data = {na,w,v};
+			    	  tableModel.addRow(data);
 			      }
-				
-				
-				
 			}
+		});
+		
+		table.getModel().addTableModelListener(new TableModelListener() {
+
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				if(e.getColumn() == 0) {
+					items.get(e.getFirstRow()).setName((String) tableModel.getValueAt(e.getFirstRow(),0 ));
+				}else if (e.getColumn() == 1) {
+					items.get(e.getFirstRow()).setWeight( Double.parseDouble((String) tableModel.getValueAt( e.getFirstRow(),1)));
+				}else if (e.getColumn() == 2) {
+					items.get(e.getFirstRow()).setValue((int) tableModel.getValueAt(e.getFirstRow(),2));
+				}
+			}
+			
 		});
 		
 		dks.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				W = Integer.parseInt(w.getText());
-				test.setmaxWeight(W);
-//				p2.removeAll();
-//				for (Integer num : test.getResult()) { 		      
-//					String str = "Name: "+test.getNameList().get(num)+", Price ($): "+
-//							test.getPriceList().get(num)+", Weight (kg): "+test.getWeightList().get(num);
-//					JLabel n = new JLabel(str);
-//					n.setForeground(Color.green);
-//					p2.add(n);		
-//			      }
-//				p2.revalidate();
+					
 				
 				
 			}
@@ -101,6 +149,22 @@ public class GraphicUI {
 				FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files (*csv)", "csv");
 				jc.setFileFilter(filter);
 				int i = jc.showOpenDialog(jc);
+				if (i == JFileChooser.APPROVE_OPTION) {
+					File f = jc.getSelectedFile();
+					try {
+						Scanner s = new Scanner(f);
+						s.useDelimiter(",");
+						s.nextLine();
+				        while(s.hasNext()){
+				            System.out.print(s.next()+"|");
+				        }
+				        s.close();
+					} catch (FileNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					
+				}
 			}
 		});
 	}

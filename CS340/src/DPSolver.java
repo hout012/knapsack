@@ -1,11 +1,13 @@
 import java.util.ArrayList;
+import java.util.List;
 public class DPSolver {
-	private int maxWeight = 0;
 	ArrayList<Item> result = new ArrayList<Item>();
-	ArrayList<Item> items = new ArrayList<Item>();
+	List<Item> items = new ArrayList<Item>();
+	private int W = 10;
+	private int n = 0;
 	
 	public DPSolver() {
-		// TODO Auto-generated constructor stub
+		
 	}
 	
 	public void createItem(String name,float weight,int price) {
@@ -13,7 +15,8 @@ public class DPSolver {
 		items.add(i);
 	}
 	
-	void knapSackDp(int W, int n) {
+	void knapSackDp() {
+		this.n = items.size();
 		int K[][] = new int[n + 1][W + 1]; 
 		int i,w;
 		// Build DP Table K[i][w]
@@ -48,23 +51,20 @@ public class DPSolver {
 
 	
 	void setmaxWeight(int w) {
-		this.maxWeight = w;
+		this.W = w;
 	}
 	
 	int getmaxWeightaxWeight() {
-		return this.maxWeight;
-	}
-	
-
-	ArrayList<Item> getItemList(){
-		return this.items;
+		return this.W;
 	}
 	
 	ArrayList<Item> getResult(){
 		return this.result;
 	}
 	
-	
+	void setItems(List<Item> items) {
+		this.items = items;
+	}
 
 	
 	
