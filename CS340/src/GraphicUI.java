@@ -18,6 +18,12 @@ public class GraphicUI {
 	int W = 0;
 	int n =0;
 	boolean onlyint = true;
+	List <Item> items = new ArrayList<Item>();
+	String col[] = {"Item Name","Weight","Value"};
+
+	DefaultTableModel tableModel = new DefaultTableModel(col, 0);
+
+	JTable table = new JTable(tableModel);
 	public GraphicUI() {
 		DPSolver test = new DPSolver();
 		
@@ -30,13 +36,9 @@ public class GraphicUI {
 		JPanel p2 =new JPanel(new BorderLayout());
 		p2.setBackground(Color.white);
 		
-		String col[] = {"Item Name","Weight","Value"};
 
-		DefaultTableModel tableModel = new DefaultTableModel(col, 0);
-
-		JTable table = new JTable(tableModel);
 		//////Test (remove)
-		List <Item> items = new ArrayList<Item>();
+
 		items.add(new Item("Item1",40,2));
 		items.add(new Item("Item2",50,3.14));
 		items.add(new Item("Item3",100,1.98));
@@ -121,9 +123,7 @@ public class GraphicUI {
 			    	  double w =  Double.parseDouble(weight.getText());
 			    	  System.out.println(onlyint);
 			    
-			    	  items.add(new Item(na,v,w));
-			    	  Object[] data = {na,w,v};
-			    	  tableModel.addRow(data);
+			    	  addData(na,v,w);
 			      }
 			}
 		});
@@ -162,10 +162,11 @@ public class GraphicUI {
 					File f = jc.getSelectedFile();
 					try {
 						Scanner s = new Scanner(f);
-						s.useDelimiter(",");
 						s.nextLine();
 				        while(s.hasNext()){
-				            System.out.print(s.next()+"|");
+				        	String[] str = s.nextLine().split(",");
+				        	addData(str[0],Integer.parseInt(str[1]),Double.parseDouble(str[2]));
+				        
 				        }
 				        s.close();
 					} catch (FileNotFoundException e1) {
@@ -176,7 +177,14 @@ public class GraphicUI {
 				}
 			}
 		});
+
 	}
+	public void addData(String n,int v,double w) {
+		items.add(new Item(n,v,w));
+  	  	Object[] data = {n,w,v};
+  	  	tableModel.addRow(data);
+	}
+
 	public static void main(String args[]) {
 		GraphicUI test = new GraphicUI();
 	}
