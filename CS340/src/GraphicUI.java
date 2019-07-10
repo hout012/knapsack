@@ -26,6 +26,7 @@ public class GraphicUI {
 		JTabbedPane t1 = new JTabbedPane();
 		
 		JPanel p1 = new JPanel();
+		p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
 		JPanel p2 =new JPanel(new BorderLayout());
 		p2.setBackground(Color.white);
 		
@@ -63,16 +64,24 @@ public class GraphicUI {
 		win.setLayout(new BoxLayout(win.getContentPane(),BoxLayout.X_AXIS));
 		
 		JButton add = new JButton("Add Item");
+		JButton remove = new JButton("Remove Item");
 		JButton dks = new JButton("Start");
 		
 		JLabel maxWeight = new JLabel("Maximum Weight");
 		JLabel knap = new JLabel("Knapsack solution");
 		JTextField w = new JTextField(5); 
+		w.setMaximumSize( w.getPreferredSize() );
 		w.setText("0");
 		
 		
 		t1.setPreferredSize(new Dimension(200,100));
-		p1.add(add);p1.add(maxWeight);p1.add(w);p1.add(knap);p1.add(dks);
+		JPanel p3 = new JPanel();
+		p3.setLayout(new BoxLayout(p3, BoxLayout.X_AXIS));
+		p3.add(maxWeight);p3.add(w);
+		JPanel p4 = new JPanel();
+		p4.setLayout(new BoxLayout(p4, BoxLayout.X_AXIS));
+		p4.add(add);p4.add(remove);
+		p1.add(p4);p1.add(p3);p1.add(knap);p1.add(dks);
 		t1.add(p1,"Items");
 		
 		win.add(p2);win.add(t1);
