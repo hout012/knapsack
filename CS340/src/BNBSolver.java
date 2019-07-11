@@ -3,11 +3,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
+import javax.swing.JTextField;
+
 public class BNBSolver {
 	   private List<Item> items;
-	   private int capacity = 10;
+	   private int capacity = 0;
 
-	private class Node implements Comparable<Node> {
+	public class Node implements Comparable<Node> {
 	      
 	      public int h;
 	      List<Item> taken;
@@ -48,7 +50,7 @@ public class BNBSolver {
 	      }
 	   }
 	   
-	   public void solve() {
+	   public Node solve() {
 	      
 	      Collections.sort(items, Item.byRatio());
 	      Node best = new Node();
@@ -88,13 +90,17 @@ public class BNBSolver {
 	            }
 	         }
 	      }
-	      for (int i = 0;i<best.taken.size();i++) {
-	    	  System.out.println(best.taken.get(i).getName());
-	      }
+	      
+	      return best;
 
 	   }
 	   
 	   public void setItems(List<Item> items) {
 		   this.items = items;
 	   }
+		public void setMaxWeight(int w) {
+			// TODO Auto-generated method stub
+			this.capacity = w;
+			
+		}
 }

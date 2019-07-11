@@ -3,11 +3,11 @@ import java.util.List;
 public class DPSolver {
 	ArrayList<Item> result = new ArrayList<Item>();
 	List<Item> items = new ArrayList<Item>();
-	private int W = 10;
+	private int W = 0;
 	private int n = 0;
 	
-	public DPSolver() {
-		
+	public DPSolver(List<Item> items) {
+		this.items = items;
 	}
 	
 	public void createItem(String name,float weight,int price) {
@@ -15,7 +15,7 @@ public class DPSolver {
 		items.add(i);
 	}
 	
-	void knapSackDp() {
+	void Solver() {
 		this.n = items.size();
 		int K[][] = new int[n + 1][W + 1]; 
 		int i,w;
@@ -40,8 +40,8 @@ public class DPSolver {
                 continue; // we didn't picked the items
             }
             else {
-            	//Items get picked
-                System.out.println("Item name: "+items.get(i-1).getName()+" Price: "+items.get(i-1).getValue() + " Weight:"+items.get(i-1).getWeight()); 
+//            	//Items get picked
+//                System.out.println("Item name: "+items.get(i-1).getName()+" Price: "+items.get(i-1).getValue() + " Weight:"+items.get(i-1).getWeight()); 
                 result.add(items.get(i-1));
                 res = res - items.get(i - 1).getValue(); 
                 w = w - (int)items.get(i - 1).getWeight(); 
